@@ -1,6 +1,12 @@
-# ==========================================
-# File: src/physics.py (Decoupled Core Logic)
-# ==========================================
+"""Rayleigh scattering intensity simulation for electromagnetic waves.
+
+This module provides an interactive Streamlit application to calculate and
+visualize how the scattering intensity of light in the atmosphere varies with
+its wavelength, adhering to the physical principle that scattering is
+inversely proportional to the fourth power of the wavelength (I proportional
+to 1 / lambda^4). It serves as a companion digital artifact for an
+electromagnetic fields and waves textbook.
+"""
 from __future__ import annotations
 import logging
 
