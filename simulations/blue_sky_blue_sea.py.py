@@ -1,11 +1,8 @@
-"""Rayleigh scattering intensity simulation for electromagnetic waves.
+"""Rayleigh scattering physical formulations.
 
-This module provides an interactive Streamlit application to calculate and
-visualize how the scattering intensity of light in the atmosphere varies with
-its wavelength, adhering to the physical principle that scattering is
-inversely proportional to the fourth power of the wavelength (I proportional
-to 1 / lambda^4). It serves as a companion digital artifact for an
-electromagnetic fields and waves textbook.
+This module provides the pure mathematical logic to calculate 
+Rayleigh scattering intensity. It is decoupled from any UI framework 
+to ensure testability and reusability across simulations.
 """
 from __future__ import annotations
 import logging
@@ -21,10 +18,13 @@ def calculate_rayleigh_intensity(wavelength_nm: float, reference_nm: float = 700
         
     Returns:
         Normalized scattering intensity.
+        
+    Raises:
+        ValueError: If wavelengths are less than or equal to zero.
     """
     if wavelength_nm <= 0 or reference_nm <= 0:
         logger.error("Wavelengths must be strictly positive numbers.")
-        raise ValueError("Invalid wavelength provided.")
+        raise ValueError("Wavelengths must be strictly positive numbers.")
         
     try:
         base_intensity = 1.0 / (wavelength_nm ** 4)
