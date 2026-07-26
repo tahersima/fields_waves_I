@@ -6,6 +6,7 @@ field vectors using numerical gradients. It demonstrates Pythonic array manipula
 continuous grid interpolation, and decoupled visualization logic.
 """
 
+
 """Streamlit micro-app for visualizing electric potential and fields."""
 from __future__ import annotations
 
@@ -16,23 +17,19 @@ import numpy.typing as npt
 import streamlit as st
 from scipy.interpolate import RegularGridInterpolator
 
-# Import the decoupled physics engine
 from src.field_math import GridConfig, create_grid, calculate_field_and_gradients, sample_electric_potential
 
 logger = logging.getLogger(__name__)
+
 
 def plot_gradient_vectors(
     x_mesh: npt.NDArray[np.float64],
     y_mesh: npt.NDArray[np.float64],
     field: npt.NDArray[np.float64],
-    dx: npt.NDArray[np.float64],
-    dy: npt.NDArray[np.float64],
-    z_slice_index: int,
-    config: GridConfig
+    z_slice_index: int
 ) -> None:
     """Render the 2D cross-section of the potential field."""
     fig, ax = plt.subplots(figsize=(6, 5), dpi=150)
-    
     contour = ax.contourf(
         x_mesh[:, :, z_slice_index], 
         y_mesh[:, :, z_slice_index], 
@@ -41,7 +38,6 @@ def plot_gradient_vectors(
         cmap="viridis"
     )
     plt.colorbar(contour, ax=ax, label="Potential Field Strength (V)")
-    
     ax.set(xlabel="X position", ylabel="Y position", title="2D Potential Cross-Section")
     ax.set_aspect("equal", adjustable="box")
     st.pyplot(fig)
@@ -58,7 +54,6 @@ def plot_electric_field(
 ) -> None:
     """Render the electric field vector quiver plot."""
     fig, ax = plt.subplots(figsize=(6, 5), dpi=150)
-    
     coords_e = np.linspace(config.start + 0.5, config.stop - 0.5, num_points)
     x_e, y_e = np.meshgrid(coords_e, coords_e, indexing="ij")
 
@@ -83,20 +78,16 @@ def plot_electric_field(
     ax.legend(loc="upper right")
     ax.set(xlabel="X position", ylabel="Y position", title="Electric Field Vector Field")
     ax.set_aspect("equal", adjustable="box")
-    
     st.pyplot(fig)
     plt.close(fig)
 
 
 def main() -> None:
-    """Execute the Streamlit application layout."""
     st.title("Electric Potential & Gradient Visualization")
     st.write("Explore the relationship between scalar potential $\\varphi$ and the electric field $E = -\\nabla\\varphi$.")
     
-    # 1. State Management & Configuration
     config = GridConfig(size=100)
     
-    # We cache the heavy 3D math so Streamlit doesn't recalculate it on every slider move
     @st.cache_data
     def load_field_data() -> tuple:
         x, y, z, coords = create_grid(config)
@@ -106,22 +97,12 @@ def main() -> None:
     with st.spinner("Computing 3D field gradients..."):
         x, y, z, coords, field, dx, dy, dz = load_field_data()
 
-    # 2. Interactive UI Control
     st.sidebar.header("Simulation Controls")
-    z_slice = st.sidebar.slider(
-        "Z-Axis Cross-Section", 
-        min_value=0, 
-        max_value=config.size - 1, 
-        value=config.size // 2,
-        help="Slide through the 3D volume along the Z-axis."
-    )
+    z_slice = st.sidebar.slider("Z-Axis Cross-Section", 0, config.size - 1, config.size // 2)
     
-    st.write(f"**Current Z-Plane:** {coords[z_slice]:.2f}")
-
-    # 3. Layout and Rendering
     col1, col2 = st.columns(2)
     with col1:
-        plot_gradient_vectors(x, y, field, dx, dy, z_slice, config)
+        plot_gradient_vectors(x, y, field, z_slice)
     with col2:
         plot_electric_field(dx, dy, coords, z_slice, config)
 
