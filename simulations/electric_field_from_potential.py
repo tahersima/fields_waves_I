@@ -6,21 +6,21 @@ field vectors using numerical gradients. It demonstrates Pythonic array manipula
 continuous grid interpolation, and decoupled visualization logic.
 """
 
-
-"""Streamlit micro-app for visualizing electric potential and fields."""
 from __future__ import annotations
+"""Streamlit micro-app for visualizing electric potential and fields."""
 
 import logging
+import matplotlib.subplots
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 import streamlit as st
 from scipy.interpolate import RegularGridInterpolator
 
+# Import the decoupled physics engine
 from src.field_math import GridConfig, create_grid, calculate_field_and_gradients, sample_electric_potential
 
 logger = logging.getLogger(__name__)
-
 
 def plot_gradient_vectors(
     x_mesh: npt.NDArray[np.float64],
