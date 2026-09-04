@@ -1,4 +1,7 @@
-# Mohammad H. Tahersima / All Rights Reserved 
+# -*- coding: utf-8 -*-
+# By: Mohammad H. Tahersima
+# At: 2026-09-04
+# ALL RIGHTS RESERVED
 """Chapter 2: Vector Operations and 3D Visualization for Electromagnetic Fields."""
 
 import logging

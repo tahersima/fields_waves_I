@@ -1,4 +1,7 @@
-# Mohammad H. Tahersima / All Rights Reserved 
+# -*- coding: utf-8 -*-
+# By: Mohammad H. Tahersima
+# At: 2026-09-04
+# ALL RIGHTS RESERVED
 """Compute and plot electric potential distributions and corresponding fields.
 
 This module calculates the 3D scalar potential field and derives the electric

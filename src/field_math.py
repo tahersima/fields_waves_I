@@ -1,4 +1,6 @@
-# Author:Mohammad H. Tahersima
+# -*- coding: utf-8 -*-
+# By: Mohammad H. Tahersima
+# At: 2026-09-04
 # ALL RIGHTS RESERVED 
 """Mathematical engine for calculating 3D scalar potentials and gradients.
 

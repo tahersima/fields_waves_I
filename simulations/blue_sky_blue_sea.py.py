@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# By: Mohammad H. Tahersima
+# At: 2026-09-04
+# ALL RIGHTS RESERVED
 """Rayleigh scattering physical formulations.
 
 This module provides the pure mathematical logic to calculate 

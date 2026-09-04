@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# By: Mohammad H. Tahersima
+# At: 2026-09-04
+# ALL RIGHTS RESERVED
 """Compute and visualize electric fields and potentials for arbitrary point charges.
 
 This module utilizes a vectorized brute-force approach to calculate the electrostatic 
